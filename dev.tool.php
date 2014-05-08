@@ -7,17 +7,22 @@
 **    Revised:	May 2014                      **
 ***********************************************/
 /* It's not perfect, but then again, there are better things for me to work on than this... */
-/* Just include this PHP file on your dev-server like so...
-	if (file_exists($_SERVER["DOCUMENT_ROOT"]."/dev.insan3.php")) include_once($_SERVER["DOCUMENT_ROOT"]."/dev.insan3.php");
-*/
+/* Just include this PHP file on your dev-server, for example like so...
+ * 
+ * if (file_exists($_SERVER["DOCUMENT_ROOT"]."/dev.tool.php")) include_once($_SERVER["DOCUMENT_ROOT"]."/dev.tool.php");
+ */
 
-/* Kinda like the retarded cousin of 'var_dump()', just call this with your array-data to 'dump' it out */
+// Kinda like the retarded cousin of 'var_dump()', just call this with your array-data to 'dump' it out //
 function array_dump($array, $pid = null){
 	$type = gettype($array);
 	if ( $type!=='array' ){ // (array() !== (array)$array) && !is_object($array) ){
 		echo "<div style='display: inline-block; background-color: #F8F8FF;'>";
-		if ( $type==='object'){ echo "(XML) = [".$array->saveHTML()."]</div>"; } else { echo "($type) = &quot;$array&quot;</div>"; }
+		if ( $type==='object'){ 
+			// No not actually all that great, this was a bodge for a project to be compatable with simpleXML objects at the time
+			echo "(object) = [".$array->saveHTML()."]</div>"; 
+		} else { echo "($type) = &quot;$array&quot;</div>"; }
 	} else {
+		// Should basically be an array here...
 		echo "<div style='margin:20px; margin-top: 0px; margin-bottom: 5px; border: 1px dashed #000080; font: 7pt Courier, MonoSpace; text-align: left; background-color: #F8F8FF;'>";
 		if (is_object($array)){
 			$vars = get_object_vars($array);
@@ -43,6 +48,7 @@ function array_dump($array, $pid = null){
 				}
  				}
 		} else {
+			// Oops... DUMP!
 			var_dump($array);
 		}
 		echo "</div>";
@@ -50,6 +56,6 @@ function array_dump($array, $pid = null){
 }
 
 // Generic //
-error_reporting(E_ALL);
-ini_set('display_errors', true);
+error_reporting(E_ALL); 		// Force on Reporting of PHP Errors
+ini_set('display_errors', true); 	// Force on Displaying of those errors
 //EOF//
